@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "90146708690",
+    "firebase_url": "https://threads-cfeda-default-rtdb.firebaseio.com",
+    "project_id": "threads-cfeda",
+    "storage_bucket": "threads-cfeda.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:90146708690:android:0ddb0e188c750ee2cbe10b",
+        "android_client_info": {
+          "package_name": "com.example.ecosnap"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBxhl14N5Khrlrwvwsuq7cuvLUSBoBX44"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:90146708690:android:0a003eda61499089cbe10b",
+        "android_client_info": {
+          "package_name": "com.example.threadclone"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBxhl14N5Khrlrwvwsuq7cuvLUSBoBX44"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

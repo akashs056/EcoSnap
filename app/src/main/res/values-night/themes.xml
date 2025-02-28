@@ -1,0 +1,11 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.EcoSnap" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/secondary_teal</item>
+        <item name="colorPrimaryVariant">@color/primary_green</item>
+        <item name="colorSecondary">@color/accent_orange</item>
+        <item name="android:colorBackground">#121212</item> <!-- Dark Background -->
+        <item name="colorSurface">#121212</item>
+        <item name="android:textColorPrimary">@color/background_white</item>
+    </style>
+</resources>

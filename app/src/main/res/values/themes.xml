@@ -1,0 +1,22 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.EcoSnap" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary & Secondary Colors -->
+        <item name="colorPrimary">@color/primary_green</item>
+        <item name="colorPrimaryVariant">@color/secondary_teal</item>
+        <item name="colorSecondary">@color/accent_orange</item>
+
+        <!-- Background & Surface -->
+        <item name="android:colorBackground">@color/background_white</item>
+        <item name="colorSurface">@color/background_white</item>
+
+        <!-- Text Colors -->
+        <item name="android:textColorPrimary">@color/text_black</item>
+
+        <!-- Status Bar & Navigation Bar -->
+        <item name="android:statusBarColor">@color/primary_green</item>
+
+    </style>
+
+    <style name="Theme.EcoSnap" parent="Base.Theme.EcoSnap" />
+</resources>
