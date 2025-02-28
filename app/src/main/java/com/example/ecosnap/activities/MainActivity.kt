@@ -15,6 +15,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
@@ -29,6 +30,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.io.File
 
 class MainActivity : AppCompatActivity() {
+    private val LOCATION_PERMISSION_REQUEST_CODE = 1
     private lateinit var binding: ActivityMainBinding
     private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
     private lateinit var cameraLauncher: ActivityResultLauncher<Intent>
@@ -40,11 +42,38 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE)
         setContentView(binding.root)
+        checkLocationPermission()
         forceLightTheme()
         setUserDetails()
         setUpBottomNavigation()
         setUpSnapButton()
         loadFragment(HomeFragment())
+    }
+
+    private fun checkLocationPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                LOCATION_PERMISSION_REQUEST_CODE
+            )
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun setUserDetails() {

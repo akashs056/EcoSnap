@@ -27,6 +27,7 @@ class HomeFragment : Fragment() {
         binding.requestRv.layoutManager = LinearLayoutManager(requireContext())
         binding.requestRv.adapter = requestAdapter
         viewModel.fetchWasteReports(GlobalVariables.email)
+        viewModel.fetchUserDetails(GlobalVariables.email)
         viewModel.wasteReports.observe(viewLifecycleOwner){reports ->
             requestAdapter.updateList(reports.getOrNull()?.reversed() ?: emptyList())
         }
@@ -36,6 +37,10 @@ class HomeFragment : Fragment() {
             }else{
                 binding.progressBar.visibility = View.GONE
             }
+        }
+
+        viewModel.fetchUserDetail.observe(viewLifecycleOwner){
+            binding.points.text = it.getOrNull()?.points.toString()
         }
 
         return binding.root

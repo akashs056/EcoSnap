@@ -3,6 +3,7 @@ package com.example.ecosnap.repository
 import android.content.Context
 import android.util.Log
 import com.example.ecosnap.models.LeaderboardCard
+import com.example.ecosnap.models.User
 import com.example.ecosnap.models.WasteReportCard
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.Dispatchers
@@ -32,12 +33,12 @@ class EcoSnapRepo(private val context: Context) {
         .writeTimeout(15, TimeUnit.SECONDS)
         .build()
 
-    suspend fun postReportWaste(email: String, imageUri: String, wasteType: String, description: String): Result<Boolean> {
+    suspend fun postReportWaste(email: String, imageUri: String, wasteType: String, description: String,location: String): Result<Boolean> {
         val url = "https://eco-snap-server.vercel.app/report/create"
         val requestBody = mapOf(
             "user" to email,
             "imageUrl" to imageUri,
-            "location" to "61611 646",
+            "location" to location,
             "type" to wasteType,
             "description" to description
         )
@@ -168,6 +169,36 @@ class EcoSnapRepo(private val context: Context) {
     fun logout() {
         auth.signOut()
         clearAllSharedPreferences()
+    }
+
+    suspend fun fetchUserDetails(email: String): Result<User> {
+        val url = "https://eco-snap-server.vercel.app/user/profile?id=${email}"
+        return withContext(Dispatchers.IO){
+            try {
+                val request = Request.Builder().url(url).build()
+                val response = client.newCall(request).execute()
+                if (response.isSuccessful) {
+                    val responseBody = response.body?.string()
+                    val jsonObject = JSONObject(responseBody)
+                    val jsonArray = jsonObject.getJSONObject("user") ?: JSONObject()
+                    val id = jsonArray.getString("_id")
+                    val name = jsonArray.getString("name")
+                    val email = jsonArray.getString("email")
+                    val points = jsonArray.getInt("points")
+                    val user = User(
+                        id,
+                        name,
+                        email,
+                        points
+                        )
+                    Result.success(user)
+                }else{
+                    Result.failure(Exception("API call failed with code: ${response.code}"))
+                }
+            }catch (e:Exception){
+                Result.failure(e)
+            }
+        }
     }
 
 }

@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.ecosnap.models.LeaderboardCard
+import com.example.ecosnap.models.User
 import com.example.ecosnap.models.WasteReportCard
 import com.example.ecosnap.repository.EcoSnapRepo
 import kotlinx.coroutines.launch
@@ -25,15 +26,18 @@ class MainViewmodel(application: Application): AndroidViewModel(application) {
     private val _fetchLeaderboard = MutableLiveData<Result<List<LeaderboardCard>>>()
     val fetchLeaderboard: LiveData<Result<List<LeaderboardCard>>> = _fetchLeaderboard
 
+    private val _fetchUserDetail = MutableLiveData<Result<User>>()
+    val fetchUserDetail: LiveData<Result<User>> = _fetchUserDetail
+
     fun setLoading(loading: Boolean) {
         _isLoading.value = loading
     }
 
 
-    fun postReportWaste(email: String, imageUri: String, wasteType: String, description: String){
+    fun postReportWaste(email: String, imageUri: String, wasteType: String, description: String,location: String){
         _isLoading.value = true
         viewModelScope.launch {
-            val result = mainRepo.postReportWaste(email, imageUri, wasteType, description)
+            val result = mainRepo.postReportWaste(email, imageUri, wasteType, description,location)
             _isReportWastePosted.postValue(result)
             _isLoading.value = false
         }
@@ -44,6 +48,15 @@ class MainViewmodel(application: Application): AndroidViewModel(application) {
         viewModelScope.launch {
             val result = mainRepo.fetchWasteReports(email)
             _wasteReports.postValue(result)
+            _isLoading.value = false
+        }
+    }
+
+    fun fetchUserDetails(email: String){
+        _isLoading.value = true
+        viewModelScope.launch {
+            val result = mainRepo.fetchUserDetails(email)
+            _fetchUserDetail.postValue(result)
             _isLoading.value = false
         }
     }
