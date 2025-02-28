@@ -10,11 +10,13 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.compose.ui.platform.ComposeView
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
@@ -25,6 +27,7 @@ import com.example.ecosnap.fragments.Fragment2
 import com.example.ecosnap.fragments.HomeFragment
 import com.example.ecosnap.fragments.LeaderBoardFragment
 import com.example.ecosnap.fragments.ProfileFragment
+import com.example.ecosnap.status.StatusScreenView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.io.File
 
@@ -107,7 +110,14 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.leaderboard -> {
-                    loadFragment(LeaderBoardFragment())
+//                    loadFragment(LeaderBoardFragment())
+                    val container = findViewById<FrameLayout>(R.id.main_fragments)
+                    container.removeAllViews() // Clear previous fragment or composable
+                    val composeView = ComposeView(this)
+                    composeView.setContent {
+                        StatusScreenView()
+                    }
+                    container.addView(composeView)
                     true
                 }
                 R.id.nav_profile -> {
