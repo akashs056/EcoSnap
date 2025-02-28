@@ -2,6 +2,7 @@ package com.example.ecosnap.repository
 
 import android.content.Context
 import android.util.Log
+import com.example.ecosnap.models.LeaderboardCard
 import com.example.ecosnap.models.WasteReportCard
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -122,6 +123,38 @@ class EcoSnapRepo(private val context: Context) {
 
         val outputFormat = SimpleDateFormat("MMM yyyy", Locale.getDefault())
         return "$day$suffix ${outputFormat.format(date)}"
+    }
+
+    suspend fun fetchLeaderboard(): Result<List<LeaderboardCard>> {
+        val url = "https://server-eco-snap.vercel.app/user/points"
+        return withContext(Dispatchers.IO){
+            try {
+                val request = Request.Builder().url(url).build()
+                val response = client.newCall(request).execute()
+                if (response.isSuccessful) {
+                    val responseBody = response.body?.string()
+                    val jsonObject = JSONObject(responseBody)
+                    val jsonArray = jsonObject.getJSONArray("users") ?: JSONArray()
+                    val leaderboardCards = mutableListOf<LeaderboardCard>()
+                    for (i in 0 until jsonArray.length()) {
+                        val card = jsonArray.getJSONObject(i)
+                        val rank = i+1
+                        val name = card.getString("name")
+                        val points = card.getInt("points")
+                        val leaderboardCard = LeaderboardCard(
+                            rank,
+                            name,
+                            points)
+                        leaderboardCards.add(leaderboardCard)
+                    }
+                    Result.success(leaderboardCards)
+                } else {
+                    Result.failure(Exception("API call failed with code: ${response.code}"))
+                }
+            }catch (e: Exception){
+                Result.failure(e)
+            }
+        }
     }
 
 }

@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.ecosnap.models.LeaderboardCard
 import com.example.ecosnap.models.WasteReportCard
 import com.example.ecosnap.repository.EcoSnapRepo
 import kotlinx.coroutines.launch
@@ -20,6 +21,9 @@ class MainViewmodel(application: Application): AndroidViewModel(application) {
 
     private val _wasteReports = MutableLiveData<Result<List<WasteReportCard>>>()
     val wasteReports: LiveData<Result<List<WasteReportCard>>> = _wasteReports
+
+    private val _fetchLeaderboard = MutableLiveData<Result<List<LeaderboardCard>>>()
+    val fetchLeaderboard: LiveData<Result<List<LeaderboardCard>>> = _fetchLeaderboard
 
     fun setLoading(loading: Boolean) {
         _isLoading.value = loading
@@ -40,6 +44,15 @@ class MainViewmodel(application: Application): AndroidViewModel(application) {
         viewModelScope.launch {
             val result = mainRepo.fetchWasteReports(email)
             _wasteReports.postValue(result)
+            _isLoading.value = false
+        }
+    }
+
+    fun fetchLeaderboard(){
+        _isLoading.value = true
+        viewModelScope.launch {
+            val result = mainRepo.fetchLeaderboard()
+            _fetchLeaderboard.postValue(result)
             _isLoading.value = false
         }
     }
