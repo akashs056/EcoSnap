@@ -61,9 +61,10 @@
     <string name="description">Description</string>
     <string name="desription_optional">Desription (Optional)</string>
     <string name="your_requests">Your Requests</string>
-    <string name="type">Type:</string>
-    <string name="status">Status:</string>
+    <string name="type">• Type:</string>
+    <string name="status">• Status:</string>
     <string name="created_at">Created At:</string>
     <string name="description_">"Description: "</string>
     <string name="leaderboard">Leaderboard</string>
+    <string name="my_profile">My Profile</string>
 </resources>

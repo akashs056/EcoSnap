@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import com.example.ecosnap.models.LeaderboardCard
 import com.example.ecosnap.models.WasteReportCard
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -23,6 +24,7 @@ class EcoSnapRepo(private val context: Context) {
 
     private val sharedPref = context.getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)
     private val editor = sharedPref.edit()
+    private val auth = FirebaseAuth.getInstance()
 
     private val client = OkHttpClient.Builder()
         .connectTimeout(10, TimeUnit.SECONDS)
@@ -31,7 +33,7 @@ class EcoSnapRepo(private val context: Context) {
         .build()
 
     suspend fun postReportWaste(email: String, imageUri: String, wasteType: String, description: String): Result<Boolean> {
-        val url = "https://server-eco-snap.vercel.app/report/create"
+        val url = "https://eco-snap-server.vercel.app/report/create"
         val requestBody = mapOf(
             "user" to email,
             "imageUrl" to imageUri,
@@ -64,7 +66,7 @@ class EcoSnapRepo(private val context: Context) {
     }
 
     suspend fun fetchWasteReports(email: String): Result<List<WasteReportCard>> {
-        val url = "https://server-eco-snap.vercel.app/report/from?userId=${email}"
+        val url = "https://eco-snap-server.vercel.app/report/from?userId=${email}"
         return withContext(Dispatchers.IO){
             try {
                 val request = Request.Builder().url(url).build()
@@ -72,7 +74,7 @@ class EcoSnapRepo(private val context: Context) {
                 if (response.isSuccessful) {
                     val responseBody = response.body?.string()
                     val jsonObject = JSONObject(responseBody)
-                    val jsonArray = jsonObject.getJSONArray("reports") ?: JSONArray()
+                    val jsonArray = jsonObject.getJSONArray("report") ?: JSONArray()
                     val wasteReports = mutableListOf<WasteReportCard>()
                     for (i in 0 until jsonArray.length()) {
                         val report = jsonArray.getJSONObject(i)
@@ -126,7 +128,7 @@ class EcoSnapRepo(private val context: Context) {
     }
 
     suspend fun fetchLeaderboard(): Result<List<LeaderboardCard>> {
-        val url = "https://server-eco-snap.vercel.app/user/points"
+        val url = "https://eco-snap-server.vercel.app/user/points"
         return withContext(Dispatchers.IO){
             try {
                 val request = Request.Builder().url(url).build()
@@ -155,6 +157,17 @@ class EcoSnapRepo(private val context: Context) {
                 Result.failure(e)
             }
         }
+    }
+
+    fun clearAllSharedPreferences() {
+        editor.clear()  // Clear all data
+        editor.apply()   // Apply changes asynchronously
+        Log.d("EcoSnapDebug", "in auth repo cleared all shared pref")
+    }
+
+    fun logout() {
+        auth.signOut()
+        clearAllSharedPreferences()
     }
 
 }

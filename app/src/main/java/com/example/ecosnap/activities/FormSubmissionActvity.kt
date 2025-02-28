@@ -1,5 +1,6 @@
 package com.example.ecosnap.activities
 
+import android.content.Intent
 import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
@@ -34,6 +35,8 @@ class FormSubmissionActvity : AppCompatActivity() {
         viewmodel.isReportWastePosted.observe(this){
             it.onSuccess {
                 Toast.makeText(this, "Report Posted Successfully", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
                 finish()
             }.onFailure { error ->
                 Toast.makeText(this, error.message, Toast.LENGTH_SHORT).show()

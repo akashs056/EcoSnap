@@ -57,5 +57,9 @@ class MainViewmodel(application: Application): AndroidViewModel(application) {
         }
     }
 
+    fun logout(){
+        mainRepo.logout()
+    }
+
 
 }

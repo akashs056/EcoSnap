@@ -31,6 +31,7 @@ class AuthRepo(private val context: Context) {
             try {
                 val task = auth.signInWithEmailAndPassword(email, password).await()
                 if (task.user != null) {
+                    saveUserDetails("Demo", email)
                     Result.success(true)
                 } else {
                     Result.failure(Exception("Authentication Failed"))
@@ -74,7 +75,7 @@ class AuthRepo(private val context: Context) {
     }
 
     suspend fun saveUserToBackend(name: String, email: String, password: String): Result<Boolean> {
-        val url = "https://server-eco-snap.vercel.app/user/create"
+        val url = "https://eco-snap-server.vercel.app/user/create"
         Log.d("EcoSnapDebug", "in auth repo saveUserToBackend url: $url")
         val requestBody = mapOf(
             "name" to name,

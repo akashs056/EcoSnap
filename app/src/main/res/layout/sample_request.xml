@@ -9,20 +9,22 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:padding="8dp"
-        android:layout_height="140dp">
+        android:layout_height="110dp"
+        android:background="@drawable/green_border"
+        >
 
         <androidx.cardview.widget.CardView
             android:id="@+id/img_card_view"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:cardCornerRadius="15dp">
             <ImageView
                 android:id="@+id/waste_img"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:src="@drawable/banner_img_1"
                 android:scaleType="centerCrop"
                 />
@@ -32,102 +34,93 @@
             android:id="@+id/typeText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="22dp"
+            android:fontFamily="@font/medium"
             android:text="@string/type"
             android:textColor="@color/text_black"
-            android:textSize="13sp"
+            android:textSize="14sp"
+            android:layout_marginTop="10dp"
             app:layout_constraintStart_toEndOf="@id/img_card_view"
-            android:fontFamily="@font/semibold"
-            android:layout_marginStart="12dp"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@+id/description" />
 
         <TextView
             android:id="@+id/type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Dry: "
-            android:textColor="@color/text_black"
-            android:textSize="13sp"
-            app:layout_constraintStart_toEndOf="@id/typeText"
-            android:fontFamily="@font/semibold"
             android:layout_marginStart="6dp"
-            app:layout_constraintTop_toTopOf="parent"/>
+            android:fontFamily="@font/medium"
+            android:text="Dry"
+            android:textColor="@color/text_black"
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@id/typeText"
+            app:layout_constraintTop_toTopOf="@+id/typeText" />
 
         <TextView
             android:id="@+id/StatusText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="22dp"
+            android:fontFamily="@font/medium"
             android:text="@string/status"
             android:textColor="@color/text_black"
-            android:textSize="13sp"
-            android:layout_marginTop="12dp"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp"
             app:layout_constraintStart_toEndOf="@id/img_card_view"
-            android:fontFamily="@font/semibold"
-            android:layout_marginStart="12dp"
-            app:layout_constraintTop_toBottomOf="@id/type"/>
+            app:layout_constraintTop_toBottomOf="@+id/typeText" />
 
         <TextView
             android:id="@+id/status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:fontFamily="@font/medium"
             android:text="Pending"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="1dp"
+            android:background="@drawable/pending_bg"
             android:textColor="@color/text_black"
             android:textSize="13sp"
-            android:layout_marginTop="12dp"
             app:layout_constraintStart_toEndOf="@id/StatusText"
-            android:fontFamily="@font/semibold"
-            android:layout_marginStart="6dp"
-            app:layout_constraintTop_toBottomOf="@id/type"/>
-        <TextView
-            android:id="@+id/descriptionText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/description_"
-            android:textColor="@color/text_black"
-            android:textSize="13sp"
-            android:layout_marginTop="12dp"
-            app:layout_constraintStart_toEndOf="@id/img_card_view"
-            android:fontFamily="@font/semibold"
-            android:layout_marginStart="12dp"
-            app:layout_constraintTop_toBottomOf="@id/status"/>
+            app:layout_constraintTop_toTopOf="@+id/StatusText" />
 
         <TextView
             android:id="@+id/description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/semibold"
             android:text="Pending"
             android:textColor="@color/text_black"
-            android:textSize="13sp"
-            android:layout_marginTop="12dp"
-            app:layout_constraintStart_toEndOf="@id/descriptionText"
-            android:fontFamily="@font/semibold"
-            android:layout_marginStart="6dp"
-            app:layout_constraintTop_toBottomOf="@id/status"/>
+            android:textSize="20sp"
+            android:layout_marginStart="16dp"
+            app:layout_constraintStart_toEndOf="@+id/img_card_view"
+            app:layout_constraintTop_toTopOf="@+id/img_card_view" />
 
         <TextView
             android:id="@+id/createdAtText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/created_at"
-            android:textColor="@color/text_black"
-            android:textSize="13sp"
-            android:layout_marginTop="12dp"
-            app:layout_constraintStart_toEndOf="@id/img_card_view"
             android:fontFamily="@font/semibold"
-            android:layout_marginStart="12dp"
-            app:layout_constraintTop_toBottomOf="@id/description"/>
+            android:text="@string/created_at"
+            android:textColor="@color/gray"
+            android:textSize="10sp"
+            android:layout_marginEnd="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/createdAt" />
 
         <TextView
             android:id="@+id/createdAt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pending"
-            android:textColor="@color/text_black"
-            android:textSize="13sp"
-            android:layout_marginTop="12dp"
-            app:layout_constraintStart_toEndOf="@id/createdAtText"
-            android:fontFamily="@font/semibold"
             android:layout_marginStart="6dp"
-            app:layout_constraintTop_toBottomOf="@id/description"/>
+            android:fontFamily="@font/semibold"
+            android:text="Pending"
+            android:layout_marginEnd="8dp"
+            android:textColor="@color/gray"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
