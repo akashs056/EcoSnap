@@ -2,6 +2,7 @@ package com.example.ecosnap.repository
 
 import android.content.Context
 import android.util.Log
+import com.example.ecosnap.Utils.GlobalVariables.isWorker
 import com.example.ecosnap.models.Event
 import com.example.ecosnap.models.LeaderboardCard
 import com.example.ecosnap.models.User
@@ -68,7 +69,10 @@ class EcoSnapRepo(private val context: Context) {
     }
 
     suspend fun fetchWasteReports(email: String): Result<List<WasteReportCard>> {
-        val url = "https://eco-snap-server.vercel.app/report/from?userId=${email}"
+        val url = if(isWorker){
+            "https://eco-snap-server.vercel.app/report/all"
+        }
+        else "https://eco-snap-server.vercel.app/report/from?userId=${email}"
         return withContext(Dispatchers.IO){
             try {
                 val request = Request.Builder().url(url).build()
