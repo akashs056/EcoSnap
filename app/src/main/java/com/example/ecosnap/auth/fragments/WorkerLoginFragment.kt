@@ -6,16 +6,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.ecosnap.activities.MainActivity
 import com.example.ecosnap.R
 import com.example.ecosnap.Utils.AppConstants.isInternetConnected
 import com.example.ecosnap.Utils.AppConstants.showToast
+import com.example.ecosnap.activities.MainActivity
 import com.example.ecosnap.auth.viewmodel.AuthViewModel
 import com.example.ecosnap.databinding.FragmentLoginBinding
+import com.example.ecosnap.databinding.FragmentWorkerLoginBinding
 import com.google.firebase.auth.FirebaseAuth
 
-class LoginFragment : Fragment() {
-    private lateinit var binding: FragmentLoginBinding
+
+class WorkerLoginFragment : Fragment() {
+    private lateinit var binding: FragmentWorkerLoginBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var viewModel: AuthViewModel
     private var email: String = ""
@@ -23,7 +25,7 @@ class LoginFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        binding = FragmentLoginBinding.inflate(layoutInflater,container,false)
+        binding = FragmentWorkerLoginBinding.inflate(inflater, container, false)
         auth = FirebaseAuth.getInstance()
         viewModel = AuthViewModel(requireActivity().application)
 
@@ -58,12 +60,11 @@ class LoginFragment : Fragment() {
             password = binding.passwordEd.text.toString().trim()
 
             if (email.isNotEmpty() && password.isNotEmpty()) {
-                viewModel.signInWithEmail(email,password,false)
+                viewModel.signInWithEmail(email,password,true)
             } else {
                 showToast(requireContext(), "Please enter email and password")
             }
         }
-
         return binding.root
     }
 

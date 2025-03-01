@@ -26,12 +26,12 @@ class AuthRepo(private val context: Context) {
         .writeTimeout(15, TimeUnit.SECONDS)
         .build()
 
-    suspend fun signInWithEmailPassword(email: String, password: String): Result<Boolean> {
+    suspend fun signInWithEmailPassword(email: String, password: String, isWorker: Boolean): Result<Boolean> {
         return withContext(Dispatchers.IO) {
             try {
                 val task = auth.signInWithEmailAndPassword(email, password).await()
                 if (task.user != null) {
-                    saveUserDetails("Demo", email)
+                    saveUserDetails("Demo", email,isWorker)
                     Result.success(true)
                 } else {
                     Result.failure(Exception("Authentication Failed"))
@@ -46,7 +46,7 @@ class AuthRepo(private val context: Context) {
             try {
                 val task = auth.createUserWithEmailAndPassword(email, password).await()
                 if (task.user != null) {
-                    saveUserDetails(name, email)
+                    saveUserDetails(name, email,false)
                     Result.success(true)
                 } else {
                     Result.failure(Exception("Authentication Failed"))
@@ -57,9 +57,10 @@ class AuthRepo(private val context: Context) {
         }
     }
 
-    private fun saveUserDetails(name: String, email: String) {
+    private fun saveUserDetails(name: String, email: String, isWorker: Boolean) {
         editor.putString("name", name)
         editor.putString("email", email)
+        editor.putBoolean("isWorker", isWorker)
         editor.apply()
     }
 
@@ -105,6 +106,10 @@ class AuthRepo(private val context: Context) {
                 Result.failure(e)
             }
         }
+    }
+
+    fun getIsWorker() : Boolean {
+        return sharedPref.getBoolean("isWorker", false)
     }
 
 }

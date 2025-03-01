@@ -10,6 +10,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -21,7 +22,9 @@ import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import com.example.ecosnap.R
 import com.example.ecosnap.Utils.GlobalVariables
+import com.example.ecosnap.Utils.GlobalVariables.isWorker
 import com.example.ecosnap.databinding.ActivityMainBinding
+import com.example.ecosnap.fragments.ExploreFragment
 import com.example.ecosnap.fragments.Fragment2
 import com.example.ecosnap.fragments.HomeFragment
 import com.example.ecosnap.fragments.LeaderBoardFragment
@@ -36,7 +39,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var cameraLauncher: ActivityResultLauncher<Intent>
     private var capturedImageUri: Uri? = null
     private lateinit var sharedPreferences: SharedPreferences
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -47,6 +49,7 @@ class MainActivity : AppCompatActivity() {
         setUserDetails()
         setUpBottomNavigation()
         setUpSnapButton()
+
         loadFragment(HomeFragment())
     }
 
@@ -79,6 +82,12 @@ class MainActivity : AppCompatActivity() {
     private fun setUserDetails() {
         GlobalVariables.name = sharedPreferences.getString("name", "").toString()
         GlobalVariables.email = sharedPreferences.getString("email", "").toString()
+        GlobalVariables.isWorker = sharedPreferences.getBoolean("isWorker", false)
+        if (isWorker){
+            binding.snap.visibility = View.GONE
+        }else{
+            binding.snap.visibility = View.VISIBLE
+        }
     }
 
     private fun setUpSnapButton(){
@@ -132,7 +141,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.nav_search -> {
-                    loadFragment(Fragment2())
+                    loadFragment(ExploreFragment())
                     true
                 }
                 R.id.leaderboard -> {

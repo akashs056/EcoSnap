@@ -22,6 +22,10 @@ class AuthFragment : Fragment() {
             val signUpFragment = SignUpFragment()
             parentFragmentManager.beginTransaction().replace(R.id.auth_fragments,signUpFragment).commit()
         }
+        binding.loginAsWorker.setOnClickListener {
+            val workerLoginFragment = WorkerLoginFragment()
+            parentFragmentManager.beginTransaction().replace(R.id.auth_fragments,workerLoginFragment).commit()
+        }
         return binding.root
     }
 

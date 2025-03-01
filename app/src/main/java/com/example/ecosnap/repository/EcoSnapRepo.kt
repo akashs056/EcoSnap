@@ -2,6 +2,7 @@ package com.example.ecosnap.repository
 
 import android.content.Context
 import android.util.Log
+import com.example.ecosnap.models.Event
 import com.example.ecosnap.models.LeaderboardCard
 import com.example.ecosnap.models.User
 import com.example.ecosnap.models.WasteReportCard
@@ -79,6 +80,7 @@ class EcoSnapRepo(private val context: Context) {
                     val wasteReports = mutableListOf<WasteReportCard>()
                     for (i in 0 until jsonArray.length()) {
                         val report = jsonArray.getJSONObject(i)
+                        val id = report.getString("_id")
                         val user = report.getString("user")
                         val imageUrl = report.getString("imageUrl")
                         val location = report.getString("location")
@@ -88,6 +90,7 @@ class EcoSnapRepo(private val context: Context) {
                         val createdAt = report.getString("createdAt")
                         val formatedDate = formatDate(createdAt)
                         val wasteReportCard = WasteReportCard(
+                            id,
                             user,
                             imageUrl,
                             location,
@@ -196,6 +199,80 @@ class EcoSnapRepo(private val context: Context) {
                     Result.failure(Exception("API call failed with code: ${response.code}"))
                 }
             }catch (e:Exception){
+                Result.failure(e)
+            }
+        }
+    }
+
+    suspend fun fetchAllEvents():Result<List<Event>> {
+        val url = "https://eco-snap-server.vercel.app/event/all"
+        return withContext(Dispatchers.IO){
+            try {
+                val request = Request.Builder().url(url).build()
+                val response = client.newCall(request).execute()
+                if (response.isSuccessful) {
+                    val responseBody = response.body?.string()
+                    val jsonObject = JSONObject(responseBody)
+                    val jsonArray = jsonObject.getJSONArray("events") ?: JSONArray()
+                    val events = mutableListOf<Event>()
+                    for (i in 0 until jsonArray.length()) {
+                        val event = jsonArray.getJSONObject(i)
+                        val title = event.getString("title")
+                        val description = event.getString("description")
+                        val date = event.getString("date")
+                        val time = event.getString("time")
+                        val location = event.getString("location")
+                        val participants = event.getString("maxParticipants")
+                        val points = event.getString("rewardPoints")
+                        val organizer = event.getString("createdBy")
+                        val eventt = Event(
+                            title,
+                            description,
+                            date,
+                            time,
+                            location,
+                            participants,
+                            points,
+                            organizer
+                        )
+                        events.add(eventt)
+                    }
+                    Result.success(events)
+                } else {
+                    Result.failure(Exception("API call failed with code: ${response.code}"))
+                }
+            }catch (e: Exception){
+                Result.failure(e)
+            }
+        }
+    }
+
+    suspend fun postCleanImage(clickedReportId: String?, email: String, downloadUrl: String): Result<Boolean> {
+        val url = "https://eco-snap-server.vercel.app/report/worker/update?id=$clickedReportId"
+        Log.d("EcoSnapDebug", "in main repo postCleanImage $clickedReportId")
+        val requestBody = mapOf(
+            "user" to email,
+            "imageUrl" to downloadUrl,
+        )
+        Log.d("EcoSnapDebug", "in main repo postReportWaste $requestBody")
+        return withContext(Dispatchers.IO) {
+            try {
+                val jsonBody = JSONObject(requestBody).toString()
+                val body = RequestBody.create("application/json".toMediaTypeOrNull(), jsonBody)
+                val request = Request.Builder()
+                    .url(url)
+                    .put(body)
+                    .build()
+                val response = client.newCall(request).execute()
+                if (response.isSuccessful) {
+                    Log.d("EcoSnapDebug", "in main repo postCleanImage response is successful}")
+                    Result.success(true)
+                } else {
+                    Log.d("EcoSnapDebug", "in main repo postCleanImage response is not successful}")
+                    Result.failure(Exception("API call failed with code: ${response.code}"))
+                }
+            } catch (e: IOException) {
+                Log.d("EcoSnapDebug", "in main repo postCleanImage exception ${e.message}")
                 Result.failure(e)
             }
         }

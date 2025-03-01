@@ -57,16 +57,16 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    // Firebade
+    // Firebase
     implementation(platform("com.google.firebase:firebase-bom:33.9.0"))
     implementation("com.google.firebase:firebase-analytics")
     //OK HTTP
     implementation ("com.squareup.okhttp3:okhttp:4.9.3") // Replace with the desired version
     implementation ("com.squareup.okhttp3:logging-interceptor:4.9.3") // Optional for logging
-    // Lifecucle Scpope
+    // Lifecycle Scope
     implementation ("androidx.lifecycle:lifecycle-extensions:2.2.0")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
     implementation ("com.github.bumptech.glide:glide:4.16.0")
-    //gps
+    //GPS
     implementation ("com.google.android.gms:play-services-location:21.0.1")
 }

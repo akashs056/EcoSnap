@@ -59,7 +59,7 @@
     <string name="submit">Submit</string>
     <string name="waste_type">Waste type</string>
     <string name="description">Description</string>
-    <string name="desription_optional">Desription (Optional)</string>
+    <string name="desription_optional">Desription</string>
     <string name="your_requests">Your Requests</string>
     <string name="type">• Type:</string>
     <string name="status">• Status:</string>
@@ -70,4 +70,8 @@
     <string name="eco_wallet">Eco Wallet</string>
     <string name="points_earned_by_you">Points Earned By You</string>
     <string name="points_history">Points history:</string>
+    <string name="impact">Impact</string>
+    <string name="explore_events">Explore Events</string>
+    <string name="login_as_a_worker">Login as a worker</string>
+    <string name="login_as_worker">Login as Worker</string>
 </resources>

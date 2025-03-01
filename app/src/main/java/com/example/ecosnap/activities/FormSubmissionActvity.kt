@@ -64,6 +64,10 @@ class FormSubmissionActvity : AppCompatActivity() {
             }
         }
         binding.submitButton.setOnClickListener {
+            if (binding.descriptionEditText.text.isEmpty()){
+                Toast.makeText(this, "Please enter a description", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             imageUri?.let { uri ->
                 uploadImageToFirebase(uri)
             } ?: run {
@@ -73,7 +77,7 @@ class FormSubmissionActvity : AppCompatActivity() {
     }
 
     private fun setUpWasteTypeDropDown() {
-        val items = arrayOf("Dry", "Wet", "E-Waste")
+        val items = arrayOf("Dry", "Wet", "Combined", "E-Waste")
         val adapter = ArrayAdapter(this, R.layout.simple_list_item, items)
 
         adapter.setDropDownViewResource(R.layout.simple_list_item)

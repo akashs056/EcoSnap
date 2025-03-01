@@ -27,13 +27,17 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
     }
 
 
-    fun signInWithEmail(email: String, password: String) {
+    fun signInWithEmail(email: String, password: String,isWorker: Boolean) {
         setLoading(true)
         viewModelScope.launch {
-            val result = authRepo.signInWithEmailPassword(email, password)
+            val result = authRepo.signInWithEmailPassword(email, password,isWorker)
             _authResult.postValue(result)
             setLoading(false)
         }
+    }
+
+    fun getIsWorker() : Boolean {
+        return authRepo.getIsWorker()
     }
 
     fun signUpWithEmail(name: String,email: String, password: String) {
