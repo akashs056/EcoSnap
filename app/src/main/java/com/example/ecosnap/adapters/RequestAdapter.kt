@@ -40,6 +40,20 @@ class RequestAdapter(
             binding.description.text = item.description
             binding.createdAt.text = item.createdAt
             binding.status.text = item.status
+            when(item.status){
+                "Pending" -> {
+                    binding.status.setBackgroundResource(R.drawable.pending_bg)
+                }
+                "In Progress"->{
+                    binding.status.setBackgroundResource(R.drawable.completed_status_bg)
+                }
+                "Completed"->{
+                    binding.status.setBackgroundResource(R.drawable.completed_status_bg)
+                }
+                "Rejected"->{
+                    binding.status.setBackgroundResource(R.drawable.rejected_status_bg)
+                }
+            }
             Glide.with(context)
                 .load(item.imageUrl)
                 .placeholder(R.drawable.placeholder)

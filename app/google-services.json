@@ -1,22 +1,22 @@
 {
   "project_info": {
-    "project_number": "90146708690",
-    "firebase_url": "https://threads-cfeda-default-rtdb.firebaseio.com",
-    "project_id": "threads-cfeda",
-    "storage_bucket": "threads-cfeda.appspot.com"
+    "project_number": "951009031336",
+    "firebase_url": "https://chatjetpackcompose-default-rtdb.firebaseio.com",
+    "project_id": "chatjetpackcompose",
+    "storage_bucket": "chatjetpackcompose.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:90146708690:android:0ddb0e188c750ee2cbe10b",
+        "mobilesdk_app_id": "1:951009031336:android:7642422302021692dc7e9d",
         "android_client_info": {
-          "package_name": "com.example.ecosnap"
+          "package_name": "com.example.chatappjetpackcompose"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCBxhl14N5Khrlrwvwsuq7cuvLUSBoBX44"
+          "current_key": "AIzaSyC8bRnuCdtxE5b14hXNIrV9AopZp3YaZ0Q"
         }
       ],
       "services": {
@@ -27,15 +27,15 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:90146708690:android:0a003eda61499089cbe10b",
+        "mobilesdk_app_id": "1:951009031336:android:1061d8e96480d304dc7e9d",
         "android_client_info": {
-          "package_name": "com.example.threadclone"
+          "package_name": "com.example.ecosnap"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCBxhl14N5Khrlrwvwsuq7cuvLUSBoBX44"
+          "current_key": "AIzaSyC8bRnuCdtxE5b14hXNIrV9AopZp3YaZ0Q"
         }
       ],
       "services": {
