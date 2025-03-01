@@ -74,4 +74,5 @@
     <string name="explore_events">Explore Events</string>
     <string name="login_as_a_worker">Login as a worker</string>
     <string name="login_as_worker">Login as Worker</string>
+    <string name="title_activity_maps">MapsActivity</string>
 </resources>

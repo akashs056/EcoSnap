@@ -24,6 +24,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ecosnap.R
 import com.example.ecosnap.Utils.GlobalVariables
 import com.example.ecosnap.Utils.GlobalVariables.email
+import com.example.ecosnap.activities.MapView
+import com.example.ecosnap.activities.MapsActivity
 import com.example.ecosnap.adapters.RequestAdapter
 import com.example.ecosnap.databinding.FragmentHomeBinding
 import com.example.ecosnap.viewmodels.MainViewmodel
@@ -46,9 +48,18 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this)[MainViewmodel::class.java]
         requestAdapter = RequestAdapter(requireContext(), emptyList(), onItemClick = {
+            val location = it.location
+            val latitude = location.split(" ")[0].toDouble()
+            val longitude = location.split(" ")[1].toDouble()
+            val intent = Intent(requireContext(), MapView::class.java)
+            intent.putExtra("latitude", latitude)
+            intent.putExtra("longitude", longitude)
+            startActivity(intent)
+        }, onCompleteClick = {
             clickedReportId = it._id
             checkCameraPermissionAndOpenCamera()
-        })
+        }
+            )
         binding.requestRv.layoutManager = LinearLayoutManager(requireContext())
         binding.requestRv.adapter = requestAdapter
         viewModel.fetchWasteReports(GlobalVariables.email)
