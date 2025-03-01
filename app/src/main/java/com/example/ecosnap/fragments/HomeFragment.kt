@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.ecosnap.R
 import com.example.ecosnap.Utils.GlobalVariables
 import com.example.ecosnap.adapters.RequestAdapter
 import com.example.ecosnap.auth.LaunchActivity
@@ -41,6 +42,18 @@ class HomeFragment : Fragment() {
 
         viewModel.fetchUserDetail.observe(viewLifecycleOwner){
             binding.points.text = it.getOrNull()?.points.toString()
+        }
+
+        binding.ecoWallet.setOnClickListener {
+            val fragment = EcoWaletFragment()
+            val bundle = Bundle()
+            bundle.putString("points", binding.points.text.toString())
+            fragment.arguments = bundle
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.main_fragments, fragment)
+                .addToBackStack(null)
+                .commit()
+
         }
 
         return binding.root

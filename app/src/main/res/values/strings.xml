@@ -67,4 +67,7 @@
     <string name="description_">"Description: "</string>
     <string name="leaderboard">Leaderboard</string>
     <string name="my_profile">My Profile</string>
+    <string name="eco_wallet">Eco Wallet</string>
+    <string name="points_earned_by_you">Points Earned By You</string>
+    <string name="points_history">Points history:</string>
 </resources>

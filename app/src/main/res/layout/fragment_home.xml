@@ -123,7 +123,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
-            android:id="@+id/profile"
+            android:id="@+id/ecoWallet"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginVertical="10dp"
